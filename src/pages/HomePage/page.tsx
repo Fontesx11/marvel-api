@@ -20,6 +20,12 @@ interface ResponseData {
 export const HomePage = () => {
 
     const [characters, setCharacters] = useState<ResponseData[]>([])
+    const[search, setSearch] = useState('')
+
+    const lowerSearch = search.toLowerCase();
+
+    const filteredChar = characters
+        .filter((char)=> char.name.toLowerCase().includes(lowerSearch))
 
     useEffect(() => {
 
@@ -44,7 +50,13 @@ export const HomePage = () => {
                 </div>
 
                 <div className="search-bar">
-                    <input type="search" placeholder="Search here" className="search" />
+                    <input 
+                      type="search" 
+                      placeholder="Search here" 
+                      className="search" 
+                      value={search}
+                      onChange={(ev)=> setSearch(ev.target.value)}
+                    />
 
                 </div>
             </header>
@@ -52,7 +64,7 @@ export const HomePage = () => {
 
             <div className='content'>
                 <ul>
-                    {characters.map(char => {
+                    {filteredChar.map(char => {
 
                         return (
                             <li key={char.id}>
