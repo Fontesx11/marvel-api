@@ -1,30 +1,69 @@
-import React, { useEffect } from "react";
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import api from '../../services/api'
+import bg from '../../assets/Images/bg.jpg'
 
-const publicKey = '19bb979fb2444ff9653b8dcaedb04cf6'
+import './homePageStyle.css'
 
-const hash = '1b572234c3e7464d0d38e8b3caf16033'
+interface ResponseData {
+
+    id: string;
+    name: string;
+    description: string;
+    thumbnail: {
+        path: string;
+        extension: string;
+    };
+
+}
 
 export const HomePage = () => {
 
+    const[characters, setCharacters] = useState<ResponseData[]>([])
+
     useEffect(() =>{
 
-        try {
+        const fetch = async () => {
+            try {
+                const res = await api.get(`characters`)
+                setCharacters(res.data.data.results)
 
-            const fetch = async () =>{
-                const res =  await axios.get(`http://gateway.marvel.com/v1/public/characters?&ts=1&apikey=${publicKey}&hash=${hash}`)
-                console.log(res.data.data.results)
+            } catch (err) {
+                console.log(err)
             }
-            fetch();
-
-        } catch(err){
-
         }
-        
+        fetch();
        
     },[])
 
     return (
-        <p>Hello World</p>
+        <>
+        <header>
+            <div className="background">
+                <img src={bg} alt="background"/>
+            </div>
+
+            <div className="search-bar">
+                <input type="search" placeholder="Search here" className="search"/>
+
+            </div>
+        </header>
+        <body>
+
+        <div className='content'>
+                <ul>
+                    {characters.map(char=>{
+
+                        return(
+                            <li>
+                                <img src={`${char.thumbnail.path}.${char.thumbnail.extension}`} alt="icon from character"/>
+                                <span className='name'>{char.name}</span>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </div>
+            
+        </body>
+        </>
     )
 }
