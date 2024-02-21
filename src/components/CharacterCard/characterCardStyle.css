@@ -1,0 +1,35 @@
+.card{
+    background-color: #B41F23;
+    color: white;
+    height: 300px;
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 1.5px;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 200px; 
+    margin-right: 1rem;
+    transition: 0.5s;
+}
+.card .title{
+    text-align: center;
+    padding: 1rem;
+    font-size: 17px;
+}
+p{
+    color:white;
+    text-align: center;
+    font-size: 25px;
+}
+
+.card img{
+    width: 100%;
+    height: auto; 
+    max-height: 200px; 
+    
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
