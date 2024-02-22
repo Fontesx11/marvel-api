@@ -23,7 +23,8 @@
 
 ## Deploy do Projeto
 
-[Marvel-APP](https://marvel-api-blue.vercel.app/){:target="_blank"}
+<a href="https://marvel-api-blue.vercel.app/" target="_blank">Marvel-APP</a>
+
 
 
 
