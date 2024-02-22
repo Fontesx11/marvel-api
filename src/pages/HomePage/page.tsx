@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from '../../services/api'
 import bg from '../../assets/Images/bg.jpg'
 
@@ -20,12 +20,11 @@ interface ResponseData {
 export const HomePage = () => {
 
     const [characters, setCharacters] = useState<ResponseData[]>([])
-    const[search, setSearch] = useState('')
+    const [search, setSearch] = useState('')
 
     const lowerSearch = search.toLowerCase();
 
-    const filteredChar = characters
-        .filter((char)=> char.name.toLowerCase().includes(lowerSearch))
+    const filteredChar = characters.filter((char) => char.name.toLowerCase().includes(lowerSearch))
 
     useEffect(() => {
 
@@ -42,6 +41,21 @@ export const HomePage = () => {
 
     }, [])
 
+    const handleMore = useCallback(async()=>{
+        try{
+            const offset = characters.length;
+            const response = await api.get('characters',{
+                params: {
+                    offset,
+                }
+            });
+
+            setCharacters([...characters,...response.data.data.results])
+        } catch(err){
+            console.log(err)
+        }
+    },[characters])
+
     return (
         <>
             <header>
@@ -50,12 +64,12 @@ export const HomePage = () => {
                 </div>
 
                 <div className="search-bar">
-                    <input 
-                      type="search" 
-                      placeholder="Search here" 
-                      className="search" 
-                      value={search}
-                      onChange={(ev)=> setSearch(ev.target.value)}
+                    <input
+                        type="search"
+                        placeholder="Search here"
+                        className="search"
+                        value={search}
+                        onChange={(ev) => setSearch(ev.target.value)}
                     />
 
                 </div>
@@ -79,7 +93,7 @@ export const HomePage = () => {
                 </ul>
             </div>
 
-
+            <button className='button-more' onClick={handleMore}>More</button>
         </>
     )
 }
