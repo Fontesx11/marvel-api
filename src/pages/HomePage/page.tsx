@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import api from '../../services/api'
 import bg from '../../assets/Images/bg.jpg'
-
-import './homePageStyle.css'
 import CharacterCard from "../../components/CharacterCard";
+import './homePageStyle.css'
 
 interface ResponseData {
 
@@ -23,7 +22,6 @@ export const HomePage = () => {
     const [search, setSearch] = useState('')
 
     const lowerSearch = search.toLowerCase();
-
     const filteredChar = characters.filter((char) => char.name.toLowerCase().includes(lowerSearch))
 
     useEffect(() => {
@@ -41,20 +39,20 @@ export const HomePage = () => {
 
     }, [])
 
-    const handleMore = useCallback(async()=>{
-        try{
+    const handleMore = useCallback(async () => {
+        try {
             const offset = characters.length;
-            const response = await api.get('characters',{
+            const response = await api.get('characters', {
                 params: {
                     offset,
                 }
             });
 
-            setCharacters([...characters,...response.data.data.results])
-        } catch(err){
+            setCharacters([...characters, ...response.data.data.results])
+        } catch (err) {
             console.log(err)
         }
-    },[characters])
+    }, [characters])
 
     return (
         <>
@@ -75,17 +73,17 @@ export const HomePage = () => {
                 </div>
             </header>
 
-
             <div className='content'>
                 <ul>
                     {filteredChar.map(char => {
 
                         return (
                             <li key={char.id}>
-                                <CharacterCard path={char.thumbnail.path}
+                                <CharacterCard 
+                                    path={char.thumbnail.path}
                                     extension={char.thumbnail.extension}
                                     name={char.name}
-
+                                    id={char.id}
                                 />
                             </li>
                         )

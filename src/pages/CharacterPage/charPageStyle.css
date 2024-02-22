@@ -1,0 +1,29 @@
+.section{
+    background-color: black;
+    display: flex;
+}
+
+.photo {
+    background-color: black;
+    color: white;
+    height: 350px;
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 1.5px;
+    overflow: hidden;
+    width: 300px; 
+    margin-right: 1rem;
+}
+
+.photo img{
+    width: 100%;
+    max-height: 400px; 
+    padding: 2rem;
+    
+}
+
+.description{
+    margin-bottom: auto;
+    margin-top: auto;
+    color: aliceblue;
+}
